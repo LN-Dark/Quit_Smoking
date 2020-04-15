@@ -15,4 +15,7 @@
     <string name="japodesirfumar">Ja podes ir fumar!</string>
     <string name="info">Info</string>
     <string name="servicoemexecucao">Serviço em execuçao para deixar de fumar</string>
+    <string name="japassaram">Ja passaram -></string>
+    <string name="minutos">Minutos</string>
+    <string name="tempo_decorrido">Mostrar Tempo ja Decorrido</string>
 </resources>

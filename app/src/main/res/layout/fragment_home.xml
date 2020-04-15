@@ -46,6 +46,20 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_timeElapsed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/colorButtonText"
+        android:gravity="center"
+        android:text="@string/tempo_decorrido"
+        app:layout_constraintBottom_toTopOf="@+id/btn_gravar_intervalo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_gravar_intervalo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -65,7 +79,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:src="@drawable/quitsmoking"
-        app:layout_constraintBottom_toTopOf="@+id/btn_gravar_intervalo"
+        app:layout_constraintBottom_toTopOf="@+id/btn_timeElapsed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />

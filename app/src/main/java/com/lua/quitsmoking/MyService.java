@@ -13,10 +13,8 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,8 +67,11 @@ public class MyService extends Service {
             pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
             if(min >= intervaloTime){
                 manager.setAlarmClock(new AlarmManager.AlarmClockInfo(Calendar.getInstance().getTimeInMillis(), pendingIntent), pendingIntent);
+                timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime));
+            }else {
+                timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime - min));
             }
-            timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime));
+
         }
     };
 
@@ -135,7 +136,7 @@ public class MyService extends Service {
 
     @Override
     public void onDestroy() {
-        stopForeground(false);
+        onCreate();
     }
 
     private void startAlarm() {

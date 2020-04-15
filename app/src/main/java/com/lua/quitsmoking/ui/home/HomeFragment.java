@@ -38,8 +38,13 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         MaterialButton btn_gravar = root.findViewById(R.id.btn_gravar_intervalo);
+        MaterialButton btn_ShowTime = root.findViewById(R.id.btn_timeElapsed);
         TextInputEditText edtxt_intervalo = root.findViewById(R.id.edtxt_intervalodetempo);
         SharedPreferences prefs = root.getContext().getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
+        btn_ShowTime.setOnClickListener(v -> {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.ShowMinutesElapsed();
+        });
         int intervaloTime = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
         if(intervaloTime != 0){
             edtxt_intervalo.setText(String.valueOf(intervaloTime));

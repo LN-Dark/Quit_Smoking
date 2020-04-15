@@ -14,4 +14,7 @@
     <string name="japodesirfumar">You can Smoke Now</string>
     <string name="info">Info</string>
     <string name="servicoemexecucao">Service running to stop smoking</string>
+    <string name="japassaram">Already passed -></string>
+    <string name="minutos">Minutes</string>
+    <string name="tempo_decorrido">Show Elapsed Time</string>
 </resources>
