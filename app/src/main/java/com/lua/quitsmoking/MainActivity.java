@@ -63,16 +63,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         int dayClock = prefs.getInt("Moon_QuitSmoking_Clock_dayClock", 0);
         int monthClock = prefs.getInt("Moon_QuitSmoking_monthClock", 0);
         int yearClock = prefs.getInt("Moon_QuitSmoking_Clock_yearClock", 0);
-        Calendar Datecompare = Calendar.getInstance();
-        Datecompare.set(yearClock,monthClock,dayClock);
-        Datecompare.set(Calendar.HOUR_OF_DAY, intervaloTime_hour);
-        Datecompare.set(Calendar.MINUTE, intervaloTime_minutes);
-        LocalDateTime ldt1 = LocalDateTime.of(yearClock, monthClock, dayClock, intervaloTime_hour, intervaloTime_minutes, 00);
-        LocalDateTime ldt2 = LocalDateTime.of(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) +1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
-                Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), 00);
-        long d1 = Duration.between(ldt1, ldt2).toMinutes();
-        Snackbar.make(findViewById(android.R.id.content),getString(R.string.japassaram) + " " + String.valueOf(d1) + " " + getString(R.string.minutos), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        int intervaloTime = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
+        if(intervaloTime != 0){
+            Calendar Datecompare = Calendar.getInstance();
+            Datecompare.set(yearClock,monthClock,dayClock);
+            Datecompare.set(Calendar.HOUR_OF_DAY, intervaloTime_hour);
+            Datecompare.set(Calendar.MINUTE, intervaloTime_minutes);
+            LocalDateTime ldt1 = LocalDateTime.of(yearClock, monthClock, dayClock, intervaloTime_hour, intervaloTime_minutes, 00);
+            LocalDateTime ldt2 = LocalDateTime.of(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) +1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+                    Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), 00);
+            long d1 = Duration.between(ldt1, ldt2).toMinutes();
+            Snackbar.make(findViewById(android.R.id.content),getString(R.string.japassaram) + " " + String.valueOf(d1) + " " + getString(R.string.minutos), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
     }
 
     private void doBindService() {
