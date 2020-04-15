@@ -21,6 +21,8 @@ import com.lua.quitsmoking.ui.info.InfoFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -60,31 +62,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         int intervaloTime_hour = prefs.getInt("Moon_QuitSmoking_Clock_hour", 0);
         int intervaloTime_minutes = prefs.getInt("Moon_QuitSmoking_Clock_minutes", 0);
         int dayClock = prefs.getInt("Moon_QuitSmoking_Clock_dayClock", 0);
-        int monthClock = prefs.getInt("Moon_QuitSmoking_Clock_monthClock", 0);
+        int monthClock = prefs.getInt("Moon_QuitSmoking_monthClock", 0);
         int yearClock = prefs.getInt("Moon_QuitSmoking_Clock_yearClock", 0);
         Calendar Datecompare = Calendar.getInstance();
         Datecompare.set(yearClock,monthClock,dayClock);
         Datecompare.set(Calendar.HOUR_OF_DAY, intervaloTime_hour);
         Datecompare.set(Calendar.MINUTE, intervaloTime_minutes);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
-        Date date1 = null;
-        Date date2 = null;
-        try {
-            String horasGravadas = intervaloTime_hour + ":" + intervaloTime_minutes;
-            String horasAgora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + Calendar.getInstance().get(Calendar.MINUTE);
-            date1 = simpleDateFormat.parse(horasGravadas);
-            date2 = simpleDateFormat.parse(horasAgora);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long difference = date2.getTime() - date1.getTime();
-        if(difference<0){
-            difference=(date2.getTime() -date1.getTime() )+(date2.getTime()-date1.getTime());
-        }
-        int days = (int) (difference / (1000*60*60*24));
-        int hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
-        int min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
-        Snackbar.make(findViewById(android.R.id.content),getString(R.string.japassaram) + " " + String.valueOf(min) + " " + getString(R.string.minutos), Snackbar.LENGTH_LONG)
+        LocalDateTime ldt1 = LocalDateTime.of(yearClock, monthClock, dayClock, intervaloTime_hour, intervaloTime_minutes, 00);
+        LocalDateTime ldt2 = LocalDateTime.of(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) +1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
+                Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), 00);
+        long d1 = Duration.between(ldt1, ldt2).toMinutes();
+        Snackbar.make(findViewById(android.R.id.content),getString(R.string.japassaram) + " " + String.valueOf(d1) + " " + getString(R.string.minutos), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
