@@ -13,8 +13,10 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -71,7 +73,6 @@ public class MyService extends Service {
             }else {
                 timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime - min));
             }
-
         }
     };
 
@@ -81,16 +82,7 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationChannel channel = new NotificationChannel("102", getString(R.string.servicoemexecucao), NotificationManager.IMPORTANCE_HIGH);
-        String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
-        Notification notification = notificationBuilder.setOngoing(true)
-                .setSmallIcon(R.drawable.ic_smoke_free_black_24dp)
-                .setPriority(PRIORITY_MIN)
-                .setCategory(NotificationCompat.CATEGORY_SERVICE)
-                .build();
-        startForeground(2, notification);
+        ShowNotification();
         startAlarm();
     }
 
@@ -105,8 +97,22 @@ public class MyService extends Service {
         return channelId;
     }
 
+    private void ShowNotification(){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel("102", getString(R.string.servicoemexecucao), NotificationManager.IMPORTANCE_HIGH);
+        String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
+        Notification notification = notificationBuilder.setOngoing(true)
+                .setSmallIcon(R.drawable.ic_smoke_free_black_24dp)
+                .setPriority(PRIORITY_MIN)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                .build();
+        startForeground(2, notification);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        ShowNotification();
         startAlarm();
         return START_STICKY;
     }
@@ -136,7 +142,8 @@ public class MyService extends Service {
 
     @Override
     public void onDestroy() {
-        onCreate();
+        Intent broadcastIntent = new Intent(getApplicationContext(), DeviceBootReceiver.class);
+        sendBroadcast(broadcastIntent);
     }
 
     private void startAlarm() {

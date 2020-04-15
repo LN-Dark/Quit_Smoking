@@ -1,7 +1,5 @@
 package com.lua.quitsmoking;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,20 +9,15 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.lua.quitsmoking.ui.home.HomeFragment;
 import com.lua.quitsmoking.ui.info.InfoFragment;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -99,8 +92,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (bindService(new Intent(MainActivity.this, MyService.class), mConnection, Context.BIND_AUTO_CREATE)) {
             mShouldUnbind = true;
         } else {
-            Log.e("Moon_Quit_Smoking", "Error: The requested service doesn't " +
-                    "exist, or this client isn't allowed access to it.");
+            Log.e("Moon_Quit_Smoking", "Error: The requested service doesn't exist, or this client isn't allowed access to it.");
         }
     }
 
