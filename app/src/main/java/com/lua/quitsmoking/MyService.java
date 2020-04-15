@@ -17,15 +17,9 @@ import android.os.IBinder;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_MIN;
@@ -141,7 +135,7 @@ public class MyService extends Service {
         int intervaloTime = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
         if(intervaloTime != 0){
             startTime = System.currentTimeMillis();
-            timerHandler.postDelayed(timerRunnable, 0);timerHandler.postDelayed(timerRunnable, 0);
+            timerRunnable.run();
         }
     }
 
