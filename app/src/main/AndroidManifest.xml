@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name="com.lua.quitsmoking.MyService"/>
+        <service android:name="com.lua.quitsmoking.MyService" />
         <receiver
             android:name="com.lua.quitsmoking.DeviceBootReceiver"
             android:enabled="true"

@@ -13,6 +13,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -20,14 +21,16 @@ import androidx.core.app.NotificationCompat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_MIN;
 
 public class MyService extends Service {
     long startTime = 0;
-
     private Handler timerHandler = new Handler();
+
     public Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
@@ -53,8 +56,9 @@ public class MyService extends Service {
             pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
             if(d1 >= intervaloTime){
                 manager.setAlarmClock(new AlarmManager.AlarmClockInfo(Calendar.getInstance().getTimeInMillis(), pendingIntent), pendingIntent);
+                myTimer();
             }
-            timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime));
+            timerHandler.postDelayed(timerRunnable, TimeUnit.MINUTES.toMillis(intervaloTime));
         }
     };
 
@@ -64,8 +68,19 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        myTimer();
         ShowNotification();
-        startAlarm();
+    }
+
+    private void myTimer(){
+        Timer myTimer = new Timer();
+        myTimer.schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                startAlarm();
+            }}, 0, 3000);
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -135,6 +150,5 @@ public class MyService extends Service {
             timerRunnable.run();
         }
     }
-
-
 }
+
