@@ -1,0 +1,2 @@
+rootProject.name='Quit Smoking'
+include ':app'

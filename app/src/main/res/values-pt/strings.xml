@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quit Smoking</string>
+    <string name="title_home">Home</string>
+    <string name="intervalo_em_minutos">Intervalo em minutos</string>
+    <string name="aqui_podes_regular_o_intervalo_de_tempo_em_minutos_por_onde_queres_comecar_a_deixar_de_fumar_n_nso_quando_receberes_a_notifica_ao_e_que_podes_voltar_a_fumar">Aqui podes regular o intervalo de tempo em minutos por onde queres começar a deixar de fumar.\n\nSo quando receberes a notificaçao e que podes voltar a fumar.</string>
+    <string name="gravar">Gravar</string>
+    <string name="intervaloguardado">Intervalo Guardado.</string>
+    <string name="notificacaofumar">Notificaçao Fumar</string>
+    <string name="notificacaoparafumar">Notificaçao para fumar um cigarro.</string>
+    <string name="doar">Doar</string>
+    <string name="muitoobrigado">Muito Obrigado</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="fumar">Fumar</string>
+    <string name="japodesirfumar">Ja podes ir fumar!</string>
+    <string name="info">Info</string>
+    <string name="servicoemexecucao">Serviço em execuçao para deixar de fumar</string>
+</resources>

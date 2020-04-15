@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Quit Smoking</string>
+    <string name="title_home">Home</string>
+    <string name="intervalo_em_minutos">Interval in minutes</string>
+    <string name="aqui_podes_regular_o_intervalo_de_tempo_em_minutos_por_onde_queres_comecar_a_deixar_de_fumar_n_nso_quando_receberes_a_notifica_ao_e_que_podes_voltar_a_fumar">Here you can adjust the time interval in minutes where you want to start smoking.\n\nOnly when you receive the notification can you smoke again.</string>
+    <string name="gravar">Save</string>
+    <string name="intervaloguardado">Saved interval.</string>
+    <string name="notificacaofumar">Smoke Notification</string>
+    <string name="notificacaoparafumar">Notification to smoke.</string>
+    <string name="doar">Donate</string>
+    <string name="muitoobrigado">Thank You</string>
+    <string name="cancelar">Cancel</string>
+    <string name="fumar">Smoke</string>
+    <string name="japodesirfumar">You can Smoke Now</string>
+    <string name="info">Info</string>
+    <string name="servicoemexecucao">Service running to stop smoking</string>
+</resources>
