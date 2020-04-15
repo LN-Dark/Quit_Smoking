@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.lua.quitsmoking.MainActivity;
 import com.lua.quitsmoking.MyService;
 import com.lua.quitsmoking.R;
 
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment {
             edtxt_intervalo.setText(String.valueOf(intervaloTime));
         }
         btn_gravar.setOnClickListener(v -> {
+            MainActivity mainActivity = (MainActivity) getActivity();
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
             SharedPreferences.Editor editor = root.getContext().getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE).edit();
@@ -54,8 +56,7 @@ public class HomeFragment extends Fragment {
             editor.putInt("Moon_QuitSmoking_monthClock", Calendar.getInstance().get(Calendar.MONTH));
             editor.putInt("Moon_QuitSmoking_Clock_yearClock", Calendar.getInstance().get(Calendar.YEAR));
             editor.apply();
-            Intent serviceIntent = new Intent(root.getContext().getApplicationContext(), MyService.class);
-            root.getContext().startForegroundService(serviceIntent );
+            mainActivity.mBoundService.timerRunnable.run();
             Toast.makeText(root.getContext(), getString(R.string.intervaloguardado), Toast.LENGTH_LONG).show();
         });
         return root;

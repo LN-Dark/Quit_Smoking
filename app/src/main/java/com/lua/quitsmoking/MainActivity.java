@@ -5,7 +5,10 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +24,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    MyService customService = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +38,41 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navigation.setItemIconTintList(null);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(getDrawable(R.mipmap.ic_launcher));
-        Intent serviceIntent = new Intent(this.getApplicationContext(), MyService.class);
-        startForegroundService(serviceIntent);
+        doBindService();
+    }
+
+    private boolean mShouldUnbind;
+    public MyService mBoundService;
+    private final ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            mBoundService = ((MyService.LocalBinder)service).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            mBoundService = null;
+        }
+    };
+
+    private void doBindService() {
+        if (bindService(new Intent(MainActivity.this, MyService.class), mConnection, Context.BIND_AUTO_CREATE)) {
+            mShouldUnbind = true;
+        } else {
+            Log.e("Moon_Quit_Smoking", "Error: The requested service doesn't " +
+                    "exist, or this client isn't allowed access to it.");
+        }
+    }
+
+    private void doUnbindService() {
+        if (mShouldUnbind) {
+            unbindService(mConnection);
+            mShouldUnbind = false;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        doUnbindService();
     }
 
     @Override

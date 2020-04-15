@@ -9,11 +9,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
@@ -30,7 +30,7 @@ public class MyService extends Service {
     long startTime = 0;
 
     private Handler timerHandler = new Handler();
-    private Runnable timerRunnable = new Runnable() {
+    public Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
             SharedPreferences prefs = getApplicationContext().getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
@@ -110,10 +110,32 @@ public class MyService extends Service {
         return START_STICKY;
     }
 
-    @Nullable
+    private final IBinder mBinder = new LocalBinder();   // interface for clients that bind
+    private boolean mAllowRebind;
+
+    public class LocalBinder extends Binder {
+        public MyService getService() {
+            return MyService.this;
+        }
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        return mAllowRebind;
+    }
+
+    @Override
+    public void onRebind(Intent intent) {
+    }
+
+    @Override
+    public void onDestroy() {
+        stopForeground(false);
     }
 
     private void startAlarm() {

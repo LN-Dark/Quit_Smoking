@@ -66,7 +66,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         SharedPreferences.Editor editor = context.getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE).edit();
         if(diaCount != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)){
             int timeInterval = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
-            timeInterval *= 2;
+            timeInterval = timeInterval + (timeInterval/2);
             editor.putInt("Moon_QuitSmoking_Clock_interval", timeInterval);
         }
         editor.putInt("Moon_QuitSmoking_Clock_hour", Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
