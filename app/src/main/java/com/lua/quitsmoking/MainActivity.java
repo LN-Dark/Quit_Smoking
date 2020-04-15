@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.activity_main);
         loadFragment(new HomeFragment());
         getSupportActionBar().setTitle(getString(R.string.app_name));
         BottomNavigationView navigation = findViewById(R.id.nav_view);

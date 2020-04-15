@@ -41,7 +41,6 @@ public class MyService extends Service {
             int dayClock = prefs.getInt("Moon_QuitSmoking_Clock_dayClock", 0);
             int monthClock = prefs.getInt("Moon_QuitSmoking_monthClock", 0);
             int yearClock = prefs.getInt("Moon_QuitSmoking_Clock_yearClock", 0);
-
             Calendar Datecompare = Calendar.getInstance();
             Datecompare.set(yearClock,monthClock,dayClock);
             Datecompare.set(Calendar.HOUR_OF_DAY, intervaloTime_hour);
@@ -54,10 +53,8 @@ public class MyService extends Service {
             pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
             if(d1 >= intervaloTime){
                 manager.setAlarmClock(new AlarmManager.AlarmClockInfo(Calendar.getInstance().getTimeInMillis(), pendingIntent), pendingIntent);
-                timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime));
-            }else {
-                timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime - d1));
             }
+            timerHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(intervaloTime));
         }
     };
 
