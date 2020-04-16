@@ -18,4 +18,7 @@
     <string name="japassaram">Ja passaram -></string>
     <string name="minutos">Minutos</string>
     <string name="tempo_decorrido">Mostrar Tempo ja Decorrido</string>
+    <string name="tempo_a_incrementar">Tempo a Incrementar</string>
+    <string name="preencheotempoaincrementar">Preenche o tempo a incrementar!</string>
+    <string name="preencheointervalodetempo">Preenche o intervalo de tempo!</string>
 </resources>

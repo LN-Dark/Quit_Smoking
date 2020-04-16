@@ -17,4 +17,7 @@
     <string name="japassaram">Already passed -></string>
     <string name="minutos">Minutes</string>
     <string name="tempo_decorrido">Show Elapsed Time</string>
+    <string name="tempo_a_incrementar">Tempo a Incrementar</string>
+    <string name="preencheotempoaincrementar">Preenche o tempo a incrementar!</string>
+    <string name="preencheointervalodetempo">Preenche o intervalo de tempo!</string>
 </resources>
