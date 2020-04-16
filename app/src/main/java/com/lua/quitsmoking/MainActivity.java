@@ -33,9 +33,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         loadFragment(new HomeFragment());
-        getSupportActionBar().setTitle(getString(R.string.app_name));
+        getSupportActionBar().setTitle(getString(R.string.title_home));
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setItemIconTintList(null);
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 fragment = new HomeFragment();
-                getSupportActionBar().setTitle(getString(R.string.app_name));
+                getSupportActionBar().setTitle(getString(R.string.title_home));
                 break;
             case R.id.navigation_info:
                 fragment = new InfoFragment();

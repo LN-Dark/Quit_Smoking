@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
         });
         int intervaloTime = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
         int incrementoTime = prefs.getInt("Moon_QuitSmoking_Clock_incremento", 0);
+        int hourConfirm = prefs.getInt("Moon_QuitSmoking_Clock_hour", 0);
         if(intervaloTime != 0){
             edtxt_intervalo.setText(String.valueOf(intervaloTime));
             edtxt_incremento.setText(String.valueOf(incrementoTime));
@@ -52,11 +53,13 @@ public class HomeFragment extends Fragment {
                     SharedPreferences.Editor editor = root.getContext().getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE).edit();
                     editor.putInt("Moon_QuitSmoking_Clock_interval", Integer.parseInt(edtxt_intervalo.getText().toString()));
                     editor.putInt("Moon_QuitSmoking_Clock_incremento", Integer.parseInt(edtxt_incremento.getText().toString()));
-                    editor.putInt("Moon_QuitSmoking_Clock_hour", Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-                    editor.putInt("Moon_QuitSmoking_Clock_minutes", Calendar.getInstance().get(Calendar.MINUTE));
-                    editor.putInt("Moon_QuitSmoking_Clock_dayClock", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-                    editor.putInt("Moon_QuitSmoking_monthClock", Calendar.getInstance().get(Calendar.MONTH) +1);
-                    editor.putInt("Moon_QuitSmoking_Clock_yearClock", Calendar.getInstance().get(Calendar.YEAR));
+                    if(hourConfirm == 0){
+                        editor.putInt("Moon_QuitSmoking_Clock_hour", Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                        editor.putInt("Moon_QuitSmoking_Clock_minutes", Calendar.getInstance().get(Calendar.MINUTE));
+                        editor.putInt("Moon_QuitSmoking_Clock_dayClock", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                        editor.putInt("Moon_QuitSmoking_monthClock", Calendar.getInstance().get(Calendar.MONTH) +1);
+                        editor.putInt("Moon_QuitSmoking_Clock_yearClock", Calendar.getInstance().get(Calendar.YEAR));
+                    }
                     editor.apply();
                     mainActivity.mBoundService.timerRunnable.run();
                     Snackbar.make(getActivity().findViewById(android.R.id.content),getString(R.string.intervaloguardado), Snackbar.LENGTH_LONG)

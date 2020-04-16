@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Quit Smoking</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Configuration</string>
     <string name="intervalo_em_minutos">Interval in minutes</string>
     <string name="aqui_podes_regular_o_intervalo_de_tempo_em_minutos_por_onde_queres_comecar_a_deixar_de_fumar_n_nso_quando_receberes_a_notifica_ao_e_que_podes_voltar_a_fumar">Here you can adjust the time interval in minutes where you want to start smoking.\n\nOnly when you receive the notification can you smoke again.\n\n Please write Interval time and increase time, it will increase time each day automatically.</string>
     <string name="gravar">Save</string>

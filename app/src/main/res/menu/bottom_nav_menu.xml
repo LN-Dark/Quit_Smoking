@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/engrenagem"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_info"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/info"
         android:title="@string/info" />
 
 </menu>
