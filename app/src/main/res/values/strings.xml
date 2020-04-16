@@ -2,7 +2,7 @@
     <string name="app_name">Quit Smoking</string>
     <string name="title_home">Home</string>
     <string name="intervalo_em_minutos">Interval in minutes</string>
-    <string name="aqui_podes_regular_o_intervalo_de_tempo_em_minutos_por_onde_queres_comecar_a_deixar_de_fumar_n_nso_quando_receberes_a_notifica_ao_e_que_podes_voltar_a_fumar">Here you can adjust the time interval in minutes where you want to start smoking.\n\nOnly when you receive the notification can you smoke again.</string>
+    <string name="aqui_podes_regular_o_intervalo_de_tempo_em_minutos_por_onde_queres_comecar_a_deixar_de_fumar_n_nso_quando_receberes_a_notifica_ao_e_que_podes_voltar_a_fumar">Here you can adjust the time interval in minutes where you want to start smoking.\n\nOnly when you receive the notification can you smoke again.\n\n Please write Interval time and increase time, it will increase time each day automatically.</string>
     <string name="gravar">Save</string>
     <string name="intervaloguardado">Saved interval.</string>
     <string name="notificacaofumar">Smoke Notification</string>
@@ -17,7 +17,7 @@
     <string name="japassaram">Already passed -></string>
     <string name="minutos">Minutes</string>
     <string name="tempo_decorrido">Show Elapsed Time</string>
-    <string name="tempo_a_incrementar">Tempo a Incrementar</string>
-    <string name="preencheotempoaincrementar">Preenche o tempo a incrementar!</string>
-    <string name="preencheointervalodetempo">Preenche o intervalo de tempo!</string>
+    <string name="tempo_a_incrementar">Time to Increment</string>
+    <string name="preencheotempoaincrementar">Fill the time to Increment!</string>
+    <string name="preencheointervalodetempo">Fill the time Interval!</string>
 </resources>
