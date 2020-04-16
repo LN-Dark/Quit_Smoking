@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         loadFragment(new HomeFragment());
         getSupportActionBar().setTitle(getString(R.string.app_name));
         BottomNavigationView navigation = findViewById(R.id.nav_view);
@@ -76,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             Snackbar.make(findViewById(android.R.id.content),getString(R.string.japassaram) + " " + String.valueOf(d1) + " " + getString(R.string.minutos), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
-
     }
 
     private void doBindService() {
