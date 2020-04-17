@@ -33,6 +33,7 @@ public class MyService extends Service {
     long startTime = 0;
     private Handler timerHandler = new Handler();
     private boolean isshown = false;
+    private int smokedNumber = 0;
 
     public Runnable timerRunnable = new Runnable() {
         @Override
@@ -66,7 +67,10 @@ public class MyService extends Service {
             }else if((d1 >= 1 || isshown)){
                 isshown = false;
             }
-            ShowNotification();
+            int smokedtoday = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
+            if(smokedtoday != smokedNumber){
+                ShowNotification();
+            }
             timerHandler.postDelayed(timerRunnable, TimeUnit.MINUTES.toMillis(intervaloTime));
         }
     };
@@ -112,7 +116,7 @@ public class MyService extends Service {
         Intent openAppIntent = new Intent(this, MainActivity.class);
         PendingIntent openAppPendingIntent = PendingIntent.getActivity(this, 0, openAppIntent, 0);
         SharedPreferences prefs = getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
-        int smokedNumber = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
+        smokedNumber = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
         notificationBuilder = new NotificationCompat.Builder(this, channelId)
