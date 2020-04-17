@@ -105,15 +105,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <ImageView
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:src="@drawable/backg"
         app:layout_constraintBottom_toTopOf="@+id/btn_timeElapsed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_gravar_intervalo" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_gravar_intervalo"/>
 
     <View
         android:id="@+id/divider"

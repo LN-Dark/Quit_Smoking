@@ -16,6 +16,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -65,7 +67,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         if(diaCount != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)){
             int timeInterval = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
             int timeIncremento = prefs.getInt("Moon_QuitSmoking_Clock_incremento", 0);
+            int smokedtoday = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
             timeInterval += timeIncremento;
+            Set<String> sets = new HashSet<>();
+            sets = prefs.getStringSet("Moon_QuitSmoking_Chart_Smoked",new HashSet<String>());
+            sets.add(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1)
+                    + "-" + smokedtoday);
+            editor.putStringSet("Moon_QuitSmoking_Chart_Smoked",sets);
             editor.putInt("Moon_QuitSmoking_Clock_interval", timeInterval);
             editor.putInt("Moon_QuitSmoking_SmokedToday", 0);
         }

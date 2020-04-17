@@ -123,6 +123,7 @@ public class MyService extends Service {
                 .setContentTitle(getString(R.string.dontsmoke))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setContentIntent(openAppPendingIntent)
+                .setSound(null)
                 .setContentText(getString(R.string.youhavesmoked) + " " + smokedNumber + " " + getString(R.string.today))
                 .addAction(R.drawable.quitsmoking, getString(R.string.more1), addNewSmokedPendingIntent);
         notificationService = notificationBuilder.setOngoing(true)

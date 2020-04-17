@@ -24,4 +24,6 @@
     <string name="today">today!</string>
     <string name="dontsmoke">Don\'t Smoke</string>
     <string name="more1">+1</string>
+    <string name="datas">Datas</string>
+    <string name="fumados">Fumados</string>
 </resources>
