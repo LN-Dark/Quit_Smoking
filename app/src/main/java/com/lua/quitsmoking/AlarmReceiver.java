@@ -67,11 +67,12 @@ public class AlarmReceiver extends BroadcastReceiver {
             int timeIncremento = prefs.getInt("Moon_QuitSmoking_Clock_incremento", 0);
             timeInterval += timeIncremento;
             editor.putInt("Moon_QuitSmoking_Clock_interval", timeInterval);
+            editor.putInt("Moon_QuitSmoking_SmokedToday", 0);
         }
         editor.putInt("Moon_QuitSmoking_Clock_hour", Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
         editor.putInt("Moon_QuitSmoking_Clock_minutes", Calendar.getInstance().get(Calendar.MINUTE));
         editor.putInt("Moon_QuitSmoking_Clock_dayClock", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        editor.putInt("Moon_QuitSmoking_monthClock", Calendar.getInstance().get(Calendar.MONTH) +1);
+        editor.putInt("Moon_QuitSmoking_monthClock", Calendar.getInstance().get(Calendar.MONTH) + 1);
         editor.putInt("Moon_QuitSmoking_Clock_yearClock", Calendar.getInstance().get(Calendar.YEAR));
         editor.apply();
         Intent serviceIntent = new Intent(context.getApplicationContext(), MyService.class);

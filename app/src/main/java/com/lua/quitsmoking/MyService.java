@@ -13,10 +13,11 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+
+import com.lua.quitsmoking.ui.home.AddSmoked;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -25,11 +26,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 import static androidx.core.app.NotificationCompat.PRIORITY_MIN;
 
 public class MyService extends Service {
     long startTime = 0;
     private Handler timerHandler = new Handler();
+    private boolean isshown = false;
 
     public Runnable timerRunnable = new Runnable() {
         @Override
@@ -55,9 +58,15 @@ public class MyService extends Service {
             myIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,myIntent,0);
             if(d1 >= intervaloTime){
-                manager.setAlarmClock(new AlarmManager.AlarmClockInfo(Calendar.getInstance().getTimeInMillis(), pendingIntent), pendingIntent);
-                myTimer();
+                if(!isshown){
+                    manager.setAlarmClock(new AlarmManager.AlarmClockInfo(Calendar.getInstance().getTimeInMillis(), pendingIntent), pendingIntent);
+                    isshown = true;
+                    myTimer();
+                }
+            }else if((d1 >= 1 || isshown)){
+                isshown = false;
             }
+            ShowNotification();
             timerHandler.postDelayed(timerRunnable, TimeUnit.MINUTES.toMillis(intervaloTime));
         }
     };
@@ -68,8 +77,8 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        myTimer();
         ShowNotification();
+        myTimer();
     }
 
     private void myTimer(){
@@ -94,16 +103,30 @@ public class MyService extends Service {
         return channelId;
     }
 
+    public Notification notificationService;
+    public NotificationCompat.Builder notificationBuilder;
     private void ShowNotification(){
+        Intent addNewSmoked = new Intent(this, AddSmoked.class);
+        addNewSmoked.putExtra(EXTRA_NOTIFICATION_ID, 0);
+        PendingIntent addNewSmokedPendingIntent = PendingIntent.getBroadcast(this, 0, addNewSmoked, 0);
+        Intent openAppIntent = new Intent(this, MainActivity.class);
+        PendingIntent openAppPendingIntent = PendingIntent.getActivity(this, 0, openAppIntent, 0);
+        SharedPreferences prefs = getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
+        int smokedNumber = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
-        Notification notification = notificationBuilder.setOngoing(true)
+        notificationBuilder = new NotificationCompat.Builder(this, channelId)
+                .setContentTitle(getString(R.string.dontsmoke))
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setContentIntent(openAppPendingIntent)
+                .setContentText(getString(R.string.youhavesmoked) + " " + smokedNumber + " " + getString(R.string.today))
+                .addAction(R.drawable.quitsmoking, getString(R.string.more1), addNewSmokedPendingIntent);
+        notificationService = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.ic_smoke_free_black_24dp)
                 .setPriority(PRIORITY_MIN)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .build();
-        startForeground(2, notification);
+        startForeground(2, notificationService);
     }
 
     @Override

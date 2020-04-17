@@ -32,6 +32,11 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="com.lua.quitsmoking.ui.home.AddSmoked"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
         <receiver android:name="com.lua.quitsmoking.AlarmReceiver" />
         <activity
             android:name=".MainActivity"

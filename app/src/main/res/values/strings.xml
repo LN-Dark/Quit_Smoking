@@ -20,4 +20,8 @@
     <string name="tempo_a_incrementar">Time to Increment</string>
     <string name="preencheotempoaincrementar">Fill the time to Increment!</string>
     <string name="preencheointervalodetempo">Fill the time Interval!</string>
+    <string name="youhavesmoked">You Have smoked</string>
+    <string name="today">today!</string>
+    <string name="dontsmoke">Don\'t Smoke</string>
+    <string name="more1">+1</string>
 </resources>

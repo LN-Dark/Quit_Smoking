@@ -19,13 +19,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.lua.quitsmoking.ui.home.HomeFragment;
 import com.lua.quitsmoking.ui.info.InfoFragment;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
