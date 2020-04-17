@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lecho.lib.hellocharts.listener.DummyLineChartOnValueSelectListener;
+import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -145,6 +147,18 @@ public class HomeFragment extends Fragment {
             data.setAxisYLeft(yAxis);
 
             lineChartView.setLineChartData(data);
+            lineChartView.setOnValueTouchListener(new LineChartOnValueSelectListener() {
+                @Override
+                public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
+                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.nodia) + " " + datas.get(pointIndex) + " " + getString(R.string.fumaste) + " " + valores.get(pointIndex), Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+
+                @Override
+                public void onValueDeselected() {
+
+                }
+            });
             Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
             viewport.top = 40;
             lineChartView.setMaximumViewport(viewport);

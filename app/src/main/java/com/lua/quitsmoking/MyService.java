@@ -100,9 +100,9 @@ public class MyService extends Service {
     private String createNotificationChannel(NotificationManager notificationManager){
         String channelId = "102";
         String channelName = getString(R.string.servicoemexecucao);
-        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
-        channel.setImportance(NotificationManager.IMPORTANCE_NONE);
-        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_MIN);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        notificationManager.deleteNotificationChannel(channelId);
         notificationManager.createNotificationChannel(channel);
         return channelId;
     }

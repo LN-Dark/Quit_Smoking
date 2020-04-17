@@ -25,4 +25,8 @@
     <string name="more1">+1</string>
     <string name="youhavesmoked">Ja fumas-te</string>
     <string name="today">hoje!</string>
+    <string name="datas">Datas</string>
+    <string name="fumados">Fumados</string>
+    <string name="nodia">No dia</string>
+    <string name="fumaste">fumas-te</string>
 </resources>
