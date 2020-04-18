@@ -7,10 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,6 +36,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import lecho.lib.hellocharts.listener.DummyLineChartOnValueSelectListener;
@@ -96,74 +111,58 @@ public class HomeFragment extends Fragment {
     }
 
     private void SetChart(){
-        LineChartView lineChartView;
-        lineChartView = root.findViewById(R.id.chart);
-
-        SharedPreferences prefs = root.getContext().getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
-        Set<String> sets = new HashSet<>();
-        sets = prefs.getStringSet("Moon_QuitSmoking_Chart_Smoked",new HashSet<String>());
-        if(!sets.isEmpty()){
-            ArrayList<String> datas = new ArrayList<>();
+        BarChart barChart = root.findViewById(R.id.barchart);
+        SharedPreferences prefsSmoked = root.getContext().getSharedPreferences("Moon_QuitSmoking_Chart_Smoked", MODE_PRIVATE);
+        Map<String, ?> allEntries = prefsSmoked.getAll();
+        if(!allEntries.isEmpty()){
+            ArrayList<String> labels = new ArrayList<>();
             ArrayList<String> valores = new ArrayList<>();
-
-            for(String set : sets){
-                String[] valorset = set.split("-");
-                datas.add(valorset[0]);
-                valores.add(valorset[1]);
+            ArrayList<String> posicaoOrdem = new ArrayList<>();
+            ArrayList<String> valoresOrdem = new ArrayList<>();
+            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                posicaoOrdem.add(entry.getKey());
+                valoresOrdem.add(entry.getValue().toString());
             }
-            Collections.reverse(datas);
-            Collections.reverse(valores);
-            List<PointValue> yAxisValues = new ArrayList<PointValue>();
-            List<AxisValue> axisValues = new ArrayList<AxisValue>();
-
-
-            Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
-
-            for (int i = 0; i < datas.size(); i++) {
-                axisValues.add(i, new AxisValue(i).setLabel(datas.get(i)));
+            for(int i = 0 ; i < posicaoOrdem.size(); i++){
+                String[] datatDecomp = valoresOrdem.get(posicaoOrdem.indexOf(String.valueOf(i +1))).split("-");
+                labels.add(datatDecomp[0]);
+                valores.add(datatDecomp[1]);
             }
-
+            List<BarEntry> yAxisValues = new ArrayList<>();
             for (int i = 0; i < valores.size(); i++) {
-                yAxisValues.add(new PointValue(i, Integer.parseInt(valores.get(i))));
+                yAxisValues.add(new BarEntry(Integer.parseInt(valores.get(i)), i));
             }
+            BarDataSet bardataset = new BarDataSet(yAxisValues, "Dias");
+            bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
+            bardataset.setValueTextColor(root.getContext().getColor(R.color.colorBorder));
+            barChart.animateY(2000);
+            barChart.setDescription(" ");
 
-            List<Line> lines = new ArrayList<>();
-            lines.add(line);
-
-            LineChartData data = new LineChartData();
-            data.setLines(lines);
-
-            Axis axis = new Axis();
-            axis.setValues(axisValues);
-            axis.setTextSize(13);
-            axis.setName(getString(R.string.datas));
-            axis.setTextColor(Color.parseColor("#03A9F4"));
-            data.setAxisXBottom(axis);
-
-            Axis yAxis = new Axis();
-            yAxis.setName(getString(R.string.fumados));
-            yAxis.setTextColor(Color.parseColor("#03A9F4"));
-            yAxis.setTextSize(14);
-            data.setAxisYLeft(yAxis);
-
-            lineChartView.setLineChartData(data);
-            lineChartView.setOnValueTouchListener(new LineChartOnValueSelectListener() {
+            Legend legend = barChart.getLegend();
+            legend.setTextColor(root.getContext().getColor(R.color.colorBorder));
+            XAxis xAxis = barChart.getXAxis();
+            xAxis.setTextColor(root.getContext().getColor(R.color.colorBorder));
+            YAxis yAxisleft = barChart.getAxisLeft();
+            bardataset.setValueFormatter(new ValueFormatter() {
                 @Override
-                public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-                    Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.nodia) + " " + datas.get(pointIndex) + " " + getString(R.string.fumaste) + " " + valores.get(pointIndex), Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-                }
-
-                @Override
-                public void onValueDeselected() {
-
+                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                    return "" + ((int) value);
                 }
             });
-            Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-            viewport.top = 40;
-            lineChartView.setMaximumViewport(viewport);
-            lineChartView.setCurrentViewport(viewport);
+            yAxisleft.setTextColor(root.getContext().getColor(R.color.colorBorder));
+            YAxis yAxisright = barChart.getAxisRight();
+            yAxisright.setTextColor(root.getContext().getColor(R.color.colorBorder));
+
+            barChart.animateXY(3000, 3000);
+            BarData data = new BarData(labels, bardataset);
+            data.setValueTextColor(root.getContext().getColor(R.color.colorBorder));
+            barChart.setData(data);
+
+
         }
 
+
+
     }
+
 }

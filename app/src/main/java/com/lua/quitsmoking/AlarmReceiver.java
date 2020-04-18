@@ -17,6 +17,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -62,18 +63,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context.getApplicationContext());
         notificationManager.notify(reqCode, builder.build());
         SharedPreferences prefs = context.getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
+        SharedPreferences prefsSmoked = context.getSharedPreferences("Moon_QuitSmoking_Chart_Smoked", MODE_PRIVATE);
         int diaCount = prefs.getInt("Moon_QuitSmoking_Clock_dayClock", 0);
         SharedPreferences.Editor editor = context.getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE).edit();
-        if(diaCount != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)){
+        SharedPreferences.Editor editorSmoked = context.getSharedPreferences("Moon_QuitSmoking_Chart_Smoked", MODE_PRIVATE).edit();
+       if(diaCount != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)){
             int timeInterval = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
             int timeIncremento = prefs.getInt("Moon_QuitSmoking_Clock_incremento", 0);
             int smokedtoday = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
             timeInterval += timeIncremento;
-            Set<String> sets = new HashSet<>();
-            sets = prefs.getStringSet("Moon_QuitSmoking_Chart_Smoked",new HashSet<String>());
-            sets.add(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1)
-                    + "-" + smokedtoday);
-            editor.putStringSet("Moon_QuitSmoking_Chart_Smoked",sets);
+            Map<String, ?> allEntries = prefsSmoked.getAll();
+            editorSmoked.putString(String.valueOf(allEntries.size() + 1), String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1) + "/" + String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + String.valueOf(smokedtoday));
+            editorSmoked.apply();
             editor.putInt("Moon_QuitSmoking_Clock_interval", timeInterval);
             editor.putInt("Moon_QuitSmoking_SmokedToday", 0);
         }

@@ -18,7 +18,7 @@ android {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            setProperty("archivesBaseName", "_Quit_Smoking_" + buildTime())
+            setProperty("archivesBaseName", "Quit_Smoking_" + buildTime())
             storePassword keystoreProperties['storePassword']
             storeFile file('/home/darknesslight/AndroidStudioProjects/QuitSmoking.jks')
         }
@@ -45,12 +45,14 @@ android {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
