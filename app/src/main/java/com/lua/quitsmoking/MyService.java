@@ -117,14 +117,19 @@ public class MyService extends Service {
         SharedPreferences prefs = getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
         smokedNumber = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
-        notificationBuilder = new NotificationCompat.Builder(this, channelId)
-                .setContentTitle(getString(R.string.dontsmoke))
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setContentIntent(openAppPendingIntent)
-                .setSound(null)
-                .setContentText(getString(R.string.youhavesmoked) + " " + smokedNumber + " " + getString(R.string.today))
-                .addAction(R.drawable.quitsmoking, getString(R.string.more1), addNewSmokedPendingIntent);
+        String channelId = null;
+        if (notificationManager != null) {
+            channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
+        }
+        if (channelId != null) {
+            notificationBuilder = new NotificationCompat.Builder(this, channelId)
+                    .setContentTitle(getString(R.string.dontsmoke))
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .setContentIntent(openAppPendingIntent)
+                    .setSound(null)
+                    .setContentText(getString(R.string.youhavesmoked) + " " + smokedNumber + " " + getString(R.string.today))
+                    .addAction(R.drawable.quitsmoking, getString(R.string.more1), addNewSmokedPendingIntent);
+        }
         notificationService = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.ic_smoke_free_black_24dp)
                 .setPriority(PRIORITY_MIN)
@@ -143,8 +148,8 @@ public class MyService extends Service {
     private final IBinder mBinder = new LocalBinder();   // interface for clients that bind
     private boolean mAllowRebind;
 
-    public class LocalBinder extends Binder {
-        public MyService getService() {
+    class LocalBinder extends Binder {
+        MyService getService() {
             return MyService.this;
         }
     }

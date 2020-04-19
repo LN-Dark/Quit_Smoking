@@ -22,9 +22,7 @@ import com.lua.quitsmoking.ui.info.InfoFragment;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadFragment(new HomeFragment());
-        getSupportActionBar().setTitle(getString(R.string.title_home));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.title_home));
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setItemIconTintList(null);
@@ -104,11 +102,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 fragment = new HomeFragment();
-                getSupportActionBar().setTitle(getString(R.string.title_home));
+                Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.title_home));
                 break;
             case R.id.navigation_info:
                 fragment = new InfoFragment();
-                getSupportActionBar().setTitle(getString(R.string.info));
+                Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.info));
                 break;
         }
         return loadFragment(fragment);

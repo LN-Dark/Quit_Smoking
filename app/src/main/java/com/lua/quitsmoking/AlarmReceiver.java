@@ -16,9 +16,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -46,7 +44,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             channel.enableLights(true);
             channel.setSound(alarmSound, audioAttributes);
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, intent, 0);
@@ -63,11 +63,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context.getApplicationContext());
         notificationManager.notify(reqCode, builder.build());
         SharedPreferences prefs = context.getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE);
-        SharedPreferences prefsSmoked = context.getSharedPreferences("Moon_QuitSmoking_Chart_Smoked", MODE_PRIVATE);
         int diaCount = prefs.getInt("Moon_QuitSmoking_Clock_dayClock", 0);
         SharedPreferences.Editor editor = context.getSharedPreferences("Moon_QuitSmoking_Clock", MODE_PRIVATE).edit();
-        SharedPreferences.Editor editorSmoked = context.getSharedPreferences("Moon_QuitSmoking_Chart_Smoked", MODE_PRIVATE).edit();
+
        if(diaCount != Calendar.getInstance().get(Calendar.DAY_OF_MONTH)){
+           SharedPreferences.Editor editorSmoked = context.getSharedPreferences("Moon_QuitSmoking_Chart_Smoked", MODE_PRIVATE).edit();
+           SharedPreferences prefsSmoked = context.getSharedPreferences("Moon_QuitSmoking_Chart_Smoked", MODE_PRIVATE);
             int timeInterval = prefs.getInt("Moon_QuitSmoking_Clock_interval", 0);
             int timeIncremento = prefs.getInt("Moon_QuitSmoking_Clock_incremento", 0);
             int smokedtoday = prefs.getInt("Moon_QuitSmoking_SmokedToday", 0);
@@ -85,6 +86,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         editor.putInt("Moon_QuitSmoking_Clock_yearClock", Calendar.getInstance().get(Calendar.YEAR));
         editor.apply();
         Intent serviceIntent = new Intent(context.getApplicationContext(), MyService.class);
-        context.startForegroundService(serviceIntent );
+        context.startForegroundService(serviceIntent);
     }
 }
